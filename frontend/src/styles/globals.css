@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .input_form {
+    @apply block w-full appearance-none border-0 border-b border-gray-500 bg-transparent py-2.5 px-0 text-sm text-gray-900 dark:text-green-600  dark:focus:border-green-600;
+  }
+  .input_form:focus {
+    @apply border-blue-600 outline-none ring-0;
+  }
+}
+
+@layer components {
+  .label_form {
+    @apply absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-gray-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-blue-600 dark:peer-focus:text-green-600;
+  }
+}
+
+@layer components {
+  .title_primary {
+    @apply lg:text-4xl md:text-2xl text-xl font-bold tracking-tight text-gray-800 sm:text-center dark:text-gray-100;
+  }
+}
