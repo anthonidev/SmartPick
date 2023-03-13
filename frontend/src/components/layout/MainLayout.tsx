@@ -18,16 +18,16 @@ const MainLayout: React.FC<PropsLayout> = ({
   // const { session, loading } = useAuth(3 * 60);
   const { data: session, status } = useSession();
 
-  useEffect(() => {
-    if (!session && status === "unauthenticated") {
-      push("/login");
-    }
-    if ((session && status === "authenticated") || asPath === "/login") {
-      push("/");
-    }
+  // useEffect(() => {
+  //   if (!session && status === "unauthenticated") {
+  //     push("/login");
+  //   }
+  //   if ((session && status === "authenticated") || asPath === "/login") {
+  //     push("/");
+  //   }
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session]);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [session]);
 
   // if (status === "loading") {
   //   return <p>Loading...</p>;

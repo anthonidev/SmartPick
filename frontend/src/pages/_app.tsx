@@ -10,6 +10,7 @@ import { ReactElement, ReactNode } from "react";
 
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "../styles/globals.css";
+
 export default function App({
   Component,
   pageProps: { session, ...pageProps },
