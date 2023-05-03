@@ -7,6 +7,7 @@ import { getSession, useSession } from "next-auth/react";
 import { NextPageContext } from "next";
 import { redirect } from "next/dist/server/api-utils";
 import Link from "next/link";
+import Header from "../navigation/Header";
 
 const MainLayout: React.FC<PropsLayout> = ({
   title,
@@ -49,6 +50,7 @@ const MainLayout: React.FC<PropsLayout> = ({
         <meta name="description" content={content} />
       </Head>
       <div className="dark:bg-gray-900 bg-white">
+        <Header />
         <main className={`  h-screen overflow-y-auto  ${maxWidth}`}>
           {children}
         </main>

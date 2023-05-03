@@ -232,6 +232,5 @@ MEDIA_URL = 'media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SITE_NAME = ('SMART-IMAGE')
