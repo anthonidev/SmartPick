@@ -14,7 +14,8 @@ cloudinary.config(
     cloud_name=os.environ.get('CLOUD_NAME'),
     api_key=os.environ.get('CLOUD_API_KEY'),
     api_secret=os.environ.get('CLOUD_API_SECRET'),
-    secure=True
+    secure=True,
+    folder='smart-pick'
 )
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.facebook',  # facebook login
 
     'apps.user',
+    'apps.image',
 ]
 
 SOCIALACCOUNT_PROVIDERS = {
