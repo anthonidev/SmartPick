@@ -204,7 +204,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 #     }
 # }
 
-SITE_ID = 1
+SITE_ID = 3
 
 DATABASES = {
     'default': dj_database_url.config(
