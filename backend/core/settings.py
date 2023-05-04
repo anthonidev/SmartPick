@@ -5,6 +5,7 @@ import os
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import dj_database_url
 
 env = environ.Env()
 environ.Env.read_env()
@@ -19,7 +20,6 @@ cloudinary.config(
 )
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-APIS_TOKEN = os.environ.get('APIS_TOKEN')
 
 
 SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -126,8 +126,8 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1:3001',
 
 
-    'https://django-admin-lotemania-production.up.railway.app',
-    'https://dashboard-client-lotemania.vercel.app',
+    'https://server.tonis.site',
+    'https://removebg.tonis.site',
 ]
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
@@ -138,8 +138,10 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:3000',
     'http://127.0.0.1:3001',
 
-    # 'https://django-admin-lotemania-production.up.railway.app',
-    # 'https://dashboard-client-lotemania.vercel.app',
+    'https://server.tonis.site',
+    'https://removebg.tonis.site',
+
+
 
 ]
 CORS_ALLOWED_ORIGINS = [
@@ -151,8 +153,9 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:3000',
     'http://127.0.0.1:3001',
 
-    # 'https://django-admin-lotemania-production.up.railway.app',
-    # 'https://dashboard-client-lotemania.vercel.app',
+
+    'https://server.tonis.site',
+    'https://removebg.tonis.site',
 
 ]
 
@@ -192,13 +195,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+# SITE_ID = 2
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 SITE_ID = 2
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default=os.environ.get('DATABASE_URL')
+    )
 }
 
 

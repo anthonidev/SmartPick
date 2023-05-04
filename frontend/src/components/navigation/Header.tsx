@@ -10,13 +10,24 @@ import {
 import { signIn, signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 type Props = {};
 
+const navigation = [
+  { name: "Remove bg", href: "/remove-bg" },
+  { name: "Filter", href: "#" },
+  { name: "Optimize", href: "#" },
+  { name: "Resize", href: "#" },
+  { name: "Layers", href: "#" },
+  { name: "Face detection", href: "#" },
+];
+
 const Header = (props: Props) => {
   const { data: session, status } = useSession();
+  const { asPath } = useRouter();
 
   return (
     <Disclosure as="nav" className="bg-white shadow">
@@ -54,30 +65,19 @@ const Header = (props: Props) => {
                 </div>
                 <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                   {/* Current: "border-indigo-500 text-gray-900", Default: "border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700" */}
-                  <Link
-                    href={"/remove-bg"}
-                    className="inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
-                  >
-                    Remove bg
-                  </Link>
-                  <a
-                    href="#"
-                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                  >
-                    Team
-                  </a>
-                  <a
-                    href="#"
-                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                  >
-                    Projects
-                  </a>
-                  <a
-                    href="#"
-                    className="inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
-                  >
-                    Calendar
-                  </a>
+                  {navigation.map((item, index) => (
+                    <Link
+                      href={item.href}
+                      key={index}
+                      className={
+                        asPath === item.href
+                          ? "inline-flex items-center border-b-2 border-indigo-500 px-1 pt-1 text-sm font-medium text-gray-900"
+                          : "inline-flex items-center border-b-2 border-transparent px-1 pt-1 text-sm font-medium text-gray-500 hover:border-gray-300 hover:text-gray-700"
+                      }
+                    >
+                      <span>{item.name}</span>
+                    </Link>
+                  ))}
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">

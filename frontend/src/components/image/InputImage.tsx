@@ -38,17 +38,19 @@ export default function InputImage({ onUpload }: ImageUploaderProps) {
         <Image
           src={URL.createObjectURL(file)}
           alt="Preview"
-          width={500}
-          height={500}
+          width={300}
+          height={300}
           className="object-cover"
         />
       ) : isDragActive ? (
         <p>Drop the image here ...</p>
       ) : (
         <p className="text-gray-400 text-xl ">
-          Seleccione o arrastre una imagen aquí
+          Drag image here or click to select image
         </p>
       )}
+
+      <span>{file?.name}</span>
     </div>
   );
 }

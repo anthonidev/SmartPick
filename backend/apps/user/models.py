@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
 from uuid import uuid4
 
+
 class CustomUserModelManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
         user = self.model(
@@ -12,7 +13,6 @@ class CustomUserModelManager(BaseUserManager):
         user.set_password(password)
         user.save(using=self._db)
 
-        
         return user
 
     def create_superuser(self, username, email, password=None):
