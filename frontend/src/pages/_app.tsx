@@ -20,7 +20,7 @@ export default function App({
   return (
     <SessionProvider session={session}>
       <Provider store={store}>
-        <ThemeProvider enableSystem={true} attribute="class">
+        <ThemeProvider enableSystem={false} attribute="class">
           {getLayout(
             <>
               <Component {...pageProps} />
