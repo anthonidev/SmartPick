@@ -127,7 +127,7 @@ CSRF_TRUSTED_ORIGINS = [
 
 
     'https://server.tonis.site',
-    'https://removebg.tonis.site',
+    'https://smartpick.tonis.site',
 ]
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
@@ -139,7 +139,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://127.0.0.1:3001',
 
     'https://server.tonis.site',
-    'https://removebg.tonis.site',
+    'https://smartpick.tonis.site',
 
 
 
@@ -155,7 +155,7 @@ CORS_ALLOWED_ORIGINS = [
 
 
     'https://server.tonis.site',
-    'https://removebg.tonis.site',
+    'https://smartpick.tonis.site',
 
 ]
 
