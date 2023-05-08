@@ -1,16 +1,15 @@
-import { ReactElement, useState } from "react";
-import MainLayout from "../components/layout/MainLayout";
 import CompareImage from "@/components/image/CompareImage";
 import InputImage from "@/components/image/InputImage";
-import { useSession } from "next-auth/react";
+import { filterService } from "@/context/slice/gallery/service";
 import { useAppDispatch, useAppSelector } from "@/context/store";
-import { removeBgService } from "@/context/slice/gallery/service";
-import { toast } from "react-toastify";
-import Link from "next/link";
 import { saveAs } from "file-saver";
+import { useSession } from "next-auth/react";
+import { ReactElement, useState } from "react";
+import { toast } from "react-toastify";
+import MainLayout from "../components/layout/MainLayout";
 type Props = {};
 
-const RemoveBg = (props: Props) => {
+const Filter = (props: Props) => {
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
 
@@ -24,12 +23,10 @@ const RemoveBg = (props: Props) => {
 
   const handleRemoveBg = () => {
     if (!uploadedFile) {
-      console.log("No hay imagen");
       return;
     }
-    console.log("Remover fondo");
     if (session?.accessToken) {
-      dispatch(removeBgService(session.accessToken, uploadedFile));
+      dispatch(filterService(session.accessToken, uploadedFile));
     } else {
       toast.error("Need to login");
     }
@@ -44,7 +41,7 @@ const RemoveBg = (props: Props) => {
   return (
     <div className="max-w-7xl mx-auto px-5">
       {}
-      <h1 className="text-4xl  mt-10 text-gray-800 ">Remove background</h1>
+      <h1 className="text-4xl  mt-10 text-gray-800 ">Filter Image</h1>
       <p className="text-gray-600 text-xl mt-5">
         Remove background from your images. You can upload an image and remove.
       </p>
@@ -103,7 +100,7 @@ const RemoveBg = (props: Props) => {
   );
 };
 
-RemoveBg.getLayout = function getLayout(page: ReactElement) {
+Filter.getLayout = function getLayout(page: ReactElement) {
   return (
     <MainLayout title="Smart Image" content="Content Page" maxWidth="w-full">
       {page}
@@ -111,4 +108,4 @@ RemoveBg.getLayout = function getLayout(page: ReactElement) {
   );
 };
 
-export default RemoveBg;
+export default Filter;

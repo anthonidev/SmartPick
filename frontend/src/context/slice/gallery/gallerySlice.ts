@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState: IGalleryState = {
   loading: false,
   image: null,
+  gallery: null,
 };
 
 export const gallerySlice = createSlice({
@@ -14,8 +15,11 @@ export const gallerySlice = createSlice({
     setImage(state, action: PayloadAction<IImage>) {
       state.image = action.payload;
     },
+    setGallery(state, action: PayloadAction<IImage[]>) {
+      state.gallery = action.payload;
+    },
   },
 });
 
-export const { setLoadingGallery, setImage } = gallerySlice.actions;
+export const { setLoadingGallery, setImage, setGallery } = gallerySlice.actions;
 export default gallerySlice.reducer;

@@ -1,6 +1,7 @@
 interface IGalleryState {
   loading: boolean;
   image: IImage | null;
+  gallery: IImage[] | null;
 }
 
 interface IImage {

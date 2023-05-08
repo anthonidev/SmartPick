@@ -51,7 +51,7 @@ const MainLayout: React.FC<PropsLayout> = ({
       </Head>
       <div className="dark:bg-gray-900 bg-white">
         <Header />
-        <main className={`  h-screen overflow-y-auto  ${maxWidth}`}>
+        <main className={`    ${maxWidth}`}>
           {children}
         </main>
       </div>

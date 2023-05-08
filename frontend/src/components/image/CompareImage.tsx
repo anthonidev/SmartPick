@@ -1,6 +1,8 @@
 import React from "react";
-import ReactCompareImage from "react-compare-image";
-import Image from "next/image";
+import {
+  ReactCompareSlider,
+  ReactCompareSliderImage,
+} from "react-compare-slider";
 type Props = {
   image1: string;
   image2: string;
@@ -8,22 +10,30 @@ type Props = {
 
 const CompareImage = (props: Props) => {
   return (
-    <div className="  flex  " style={{ height: "500px" }}>
-      <ReactCompareImage
-        leftImage={props.image1}
-        rightImage={props.image2}
-        handleSize={50}
-        sliderLineWidth={5}
-        sliderLineColor="#808080"
-        sliderPositionPercentage={0.1}
-        leftImageAlt="Original Image"
-        rightImageAlt="Remove background Image"
-        aspectRatio="wider"
-        leftImageCss={{ height: "500px", objectFit: "contain", width: "100%" }}
-        rightImageCss={{ height: "500px", objectFit: "contain", width: "100%" }}
-        // height={500}
+    <>
+      <ReactCompareSlider
+        style={{
+          height: "600px",
+          width: "100%",
+        }}
+        itemOne={
+          <ReactCompareSliderImage
+            src={props.image1}
+            srcSet={props.image1}
+            alt="Image one"
+            style={{ objectFit: "contain" }}
+          />
+        }
+        itemTwo={
+          <ReactCompareSliderImage
+            src={props.image2}
+            srcSet={props.image2}
+            alt="Image two"
+            style={{ objectFit: "contain" }}
+          />
+        }
       />
-    </div>
+    </>
   );
 };
 

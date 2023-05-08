@@ -4,6 +4,7 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import {
   Bars3Icon,
   BellIcon,
+  PhotoIcon,
   UserIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
@@ -18,7 +19,7 @@ type Props = {};
 
 const navigation = [
   { name: "Remove bg", href: "/remove-bg" },
-  { name: "Filter", href: "#" },
+  { name: "Filter", href: "/filter" },
   { name: "Optimize", href: "#" },
   { name: "Resize", href: "#" },
   { name: "Layers", href: "#" },
@@ -30,7 +31,7 @@ const Header = (props: Props) => {
   const { asPath } = useRouter();
 
   return (
-    <Disclosure as="nav" className="bg-white shadow">
+    <Disclosure as="nav" className="bg-white shadow sticky top-0 z-30">
       {({ open }) => (
         <>
           <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
@@ -81,14 +82,15 @@ const Header = (props: Props) => {
                 </div>
               </div>
               <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                <button
-                  type="button"
-                  className="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                >
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="h-6 w-6" aria-hidden="true" />
-                </button>
-
+                {status === "authenticated" && (
+                  <Link
+                    href={"/account/gallery"}
+                    className="rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                  >
+                    <span className="sr-only">View notifications</span>
+                    <PhotoIcon className="h-6 w-6" aria-hidden="true" />
+                  </Link>
+                )}
                 {status === "authenticated" && (
                   <Menu as="div" className="relative ml-3">
                     <div>
