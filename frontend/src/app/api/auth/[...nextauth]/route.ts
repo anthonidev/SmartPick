@@ -6,8 +6,10 @@ import jwt from "jsonwebtoken";
 
 namespace JwtUtils {
   export const isJwtExpired = (token: string) => {
+    // offset by 60 seconds, so we will check if the token is "almost expired".
     const currentTime = Math.round(Date.now() / 1000 + 60);
     const decoded = jwt.decode(token);
+
     if (
       decoded !== null &&
       decoded !== undefined &&
@@ -17,13 +19,16 @@ namespace JwtUtils {
         const adjustedExpiry = decoded["exp"];
 
         if (adjustedExpiry < currentTime) {
+          // console.log("Token expired");
           return true;
         }
 
+        // console.log("Token has not expired yet");
         return false;
       }
     }
 
+    // console.log('Token["exp"] does not exist');
     return true;
   };
 }
@@ -61,12 +66,13 @@ export const authOptions: NextAuthOptions = {
               }
             );
 
-            const { access_token, refresh_token } = response.data;
-
+            const { access_token, refresh_token, is_configured } =
+              response.data;
             token = {
               ...token,
               accessToken: access_token,
               refreshToken: refresh_token,
+              is_configured: is_configured,
             };
 
             return token;
@@ -84,13 +90,16 @@ export const authOptions: NextAuthOptions = {
               refresh: token.refreshToken,
             }
           );
-          const { access, refresh } = response.data;
+          const { access, refresh, is_configured } = response.data;
+          console.log("refreshed token", response.data);
 
           if (access && refresh) {
             token = {
               ...token,
               accessToken: access,
               refreshToken: refresh,
+              is_configured: is_configured,
+
               iat: Math.floor(Date.now() / 1000),
               exp: Math.floor(Date.now() / 1000 + 2 * 60 * 60),
             };
@@ -106,9 +115,13 @@ export const authOptions: NextAuthOptions = {
       }
       return token;
     },
-    async session({ session, user, token }) {
+    async session({ session, token }) {
       session.accessToken = token.accessToken as string;
       return { ...session };
+    },
+
+    async redirect({ url, baseUrl }) {
+      return url.startsWith(baseUrl) ? url : baseUrl;
     },
   },
 };
