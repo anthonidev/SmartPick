@@ -7,24 +7,17 @@ export default function LoginPage() {
       <div className="flex min-h-full flex-1">
         <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
           <div className="mx-auto w-full max-w-sm lg:w-96">
-            <div>
+            <div className="flex flex-col justify-center items-center">
               <Image
-                className="h-11"
                 src="/icons/logo.svg"
                 alt="Lotemania logo"
-                width={44}
-                height={44}
+                width={200}
+                height={200}
               />
 
               <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">
                 Iniciar sesión o crear una cuenta
               </h2>
-              <p className="mt-2 text-sm leading-6 text-gray-500">
-                No eres miembro todavía?{" "}
-                <span className="font-semibold text-indigo-600 ">
-                  Empieza gratis por 30 días
-                </span>
-              </p>
             </div>
             <Login />
           </div>
