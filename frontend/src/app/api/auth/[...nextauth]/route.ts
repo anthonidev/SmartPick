@@ -6,7 +6,6 @@ import jwt from "jsonwebtoken";
 
 namespace JwtUtils {
   export const isJwtExpired = (token: string) => {
-    // offset by 60 seconds, so we will check if the token is "almost expired".
     const currentTime = Math.round(Date.now() / 1000 + 60);
     const decoded = jwt.decode(token);
 
@@ -19,16 +18,11 @@ namespace JwtUtils {
         const adjustedExpiry = decoded["exp"];
 
         if (adjustedExpiry < currentTime) {
-          // console.log("Token expired");
           return true;
         }
-
-        // console.log("Token has not expired yet");
         return false;
       }
     }
-
-    // console.log('Token["exp"] does not exist');
     return true;
   };
 }
@@ -44,7 +38,7 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     jwt: true,
-    maxAge: 24 * 60 * 60, // 24 hours
+    maxAge: 24 * 60 * 60,
   },
   jwt: {
     secret: process.env.JWT_SECRET,
@@ -91,7 +85,6 @@ export const authOptions: NextAuthOptions = {
             }
           );
           const { access, refresh, is_configured } = response.data;
-          console.log("refreshed token", response.data);
 
           if (access && refresh) {
             token = {
