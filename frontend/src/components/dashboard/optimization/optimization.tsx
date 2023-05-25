@@ -2,6 +2,7 @@
 import CompareImage from "@/components/shared/compare-image";
 import InputImage from "@/components/shared/input-image";
 import ButtonDownload from "@/components/ui/button-download";
+import InfoImage from "@/components/ui/info-image";
 import RadioButtonNumber from "@/components/ui/radio-button-number";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { setImage } from "@/context/slice/gallery/gallerySlice";
@@ -67,7 +68,7 @@ const Optimization = ({ session }: Props) => {
           <div className="mt-1 col-span-8  row-span-2  ">
             <CompareImage
               image1={URL.createObjectURL(uploadedFile)}
-              image2={`${process.env.NEXT_PUBLIC_MEDIA_URL}/${image.public_id}`}
+              image2={`${process.env.NEXT_PUBLIC_MEDIA_URL}${image.public_id}`}
             />
           </div>
           <div className="mt-1 overflow-hidden col-span-4  row-span-1 ">
@@ -78,17 +79,17 @@ const Optimization = ({ session }: Props) => {
             <div className="text-gray-500">
               <span className="text-gray-800">Peso antes: </span>
               <span className="font-bold">
-                {BytesToMegabytes(uploadedFile.size)} MB
+                {BytesToMegabytes(uploadedFile.size, 4)} MB
               </span>
             </div>
             <div className="text-gray-500">
               <span className="text-gray-800">Peso despues: </span>
               <span className="font-bold">
-                {BytesToMegabytes(image.bytes)} MB
+                {BytesToMegabytes(image.bytes, 4)} MB
               </span>
             </div>
 
-            <div className="flex justify-center items-center h-full">
+            <div className="flex justify-center items-center  flex-col space-y-5">
               <ButtonDownload handleDownload={handleDownload} />
             </div>
           </div>

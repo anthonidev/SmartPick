@@ -1,11 +1,16 @@
 "use client";
 import {
   ExclamationCircleIcon,
-  PencilSquareIcon,
+  HomeIcon,
+  PhotoIcon,
+  ClipboardDocumentCheckIcon,
+  FunnelIcon,
+  ArrowsPointingInIcon,
 } from "@heroicons/react/24/outline";
 import React, { useState, Fragment } from "react";
 import { Combobox, Dialog, Transition } from "@headlessui/react";
 import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import { useRouter } from "next/navigation";
 type Props = {};
 const items: {
   id: number;
@@ -21,40 +26,40 @@ const items: {
     description: "Dashboard",
     url: "/dashboard",
     color: "bg-indigo-500",
-    icon: PencilSquareIcon,
+    icon: HomeIcon,
   },
   {
     id: 2,
-    name: "Cuenta",
-    description: "Mi información",
-    url: "/dashboard/account/profile",
+    name: "Galeria",
+    description: "Mis imágenes",
+    url: "/dashboard/gallery",
     color: "bg-indigo-500",
-    icon: PencilSquareIcon,
+    icon: PhotoIcon,
   },
   {
     id: 3,
-    name: "Tarjeta",
-    description: " Actualizar tarjeta de crédito",
-    url: "/dashboard",
+    name: "Remover fondo",
+    description: " Remover fondo de imagen",
+    url: "/dashboard/remove-bg",
     color: "bg-indigo-500",
-    icon: PencilSquareIcon,
+    icon: ClipboardDocumentCheckIcon,
   },
   {
     id: 4,
-    name: "Plan",
-    description: "Actualizar plan",
-    url: "/dashboard/account/plan",
+    name: "Filtros",
+    description: "Aplicar filtros a imagen",
+    url: "/dashboard/filter",
 
     color: "bg-indigo-500",
-    icon: PencilSquareIcon,
+    icon: FunnelIcon,
   },
   {
     id: 5,
-    name: "Privacidad",
-    description: "Política de privacidad y términos",
-    url: "/dashboard/term",
+    name: "Optimización",
+    description: "Optimizar imagen",
+    url: "/dashboard/optimization",
     color: "bg-indigo-500",
-    icon: PencilSquareIcon,
+    icon: ArrowsPointingInIcon,
   },
 ];
 function classNames(...classes: any) {
@@ -64,6 +69,8 @@ function classNames(...classes: any) {
 const SearchBar = (props: Props) => {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
+  const router = useRouter();
+
   const filteredItems =
     query === ""
       ? []
@@ -72,7 +79,6 @@ const SearchBar = (props: Props) => {
         });
 
   const openModal = () => {
-    console.log("open");
     setOpen(true);
   };
 
@@ -117,7 +123,9 @@ const SearchBar = (props: Props) => {
             >
               <Dialog.Panel className="mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
                 <Combobox
-                  onChange={(item: any) => (window.location = item.url)}
+                  onChange={(item: any) => (
+                    router.push(item.url), setOpen(false)
+                  )}
                 >
                   <div className="relative">
                     <MagnifyingGlassIcon

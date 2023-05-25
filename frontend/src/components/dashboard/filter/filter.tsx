@@ -67,7 +67,7 @@ const Filter = ({ session }: Props) => {
           <div className="mt-1 col-span-8  row-span-2  ">
             <CompareImage
               image1={URL.createObjectURL(uploadedFile)}
-              image2={`${process.env.NEXT_PUBLIC_MEDIA_URL}/${image.public_id}`}
+              image2={`${process.env.NEXT_PUBLIC_MEDIA_URL}${image.public_id}`}
             />
           </div>
           <div className="mt-1 overflow-hidden col-span-4  row-span-1 ">

@@ -33,9 +33,7 @@ const ImageItem = ({ image: { format, id, name, public_id, url } }: Props) => {
       </div>
       <div className="pb-4 pt-10 text-center">
         <div className="mt-3 flex flex-col items-center">
-          <Link href={`/gallery/${id}`} className="mt-1 text-sm text-gray-500">
-            {name}
-          </Link>
+          <span className="mt-1 text-sm text-gray-500">{name}</span>
         </div>
         <p className="mt-4 text-base font-medium text-gray-900">{format}</p>
       </div>
