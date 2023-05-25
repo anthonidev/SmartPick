@@ -7,7 +7,7 @@ class ImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Image
         fields = ('id', 'format', 'created_at', 'name',
-                  'url', 'public_id', 'asset_id', )
+                  'url', 'public_id', 'asset_id', 'width', 'height', 'bytes')
 
 
 class GalleySerializer(serializers.ModelSerializer):

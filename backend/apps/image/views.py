@@ -51,7 +51,10 @@ class RemoveBgView(generics.CreateAPIView):
                 url=image.get('secure_url'),
                 public_id=image.get('public_id'),
                 asset_id=image.get('asset_id'),
-                galley=gallery
+                galley=gallery,
+                width=image.get('width'),
+                height=image.get('height'),
+                bytes=image.get('bytes'),
             )
 
             image_upload.close()
@@ -78,25 +81,25 @@ class ImageView(generics.ListAPIView):
 
         # get cloudinary image
 
-        clound = cloudinary.uploader.resource(
-            image.public_id,
-            type='upload',
-            resource_type='image',
-            folder='smart-pick',
-        )
-
-        # List version of cloudinary image
-
-        # clound = cloudinary.api.resource(
+        # clound = cloudinary.uploader.resource(
         #     image.public_id,
         #     type='upload',
         #     resource_type='image',
         #     folder='smart-pick',
         # )
 
-        if not clound:
-            return Response({'error': 'Image not found'}, status=status.HTTP_404_NOT_FOUND)
-        print(clound)
+        # # List version of cloudinary image
+
+        # # clound = cloudinary.api.resource(
+        # #     image.public_id,
+        # #     type='upload',
+        # #     resource_type='image',
+        # #     folder='smart-pick',
+        # # )
+
+        # if not clound:
+        #     return Response({'error': 'Image not found'}, status=status.HTTP_404_NOT_FOUND)
+        # print(clound)
 
         serializer = self.get_serializer(image)
         return Response(serializer.data, status=status.HTTP_200_OK)
@@ -107,7 +110,7 @@ class FilterView(generics.CreateAPIView):
     serializer_class = ImageSerializer
     queryset = Image.objects.all()
 
-    def post(self, request):
+    def post(self, request, filter):
         image_file = request.data.get('image')
         user = self.request.user
         print(image_file)
@@ -121,7 +124,7 @@ class FilterView(generics.CreateAPIView):
                 folder='smart-pick',
                 transformation=[
                     # {'width': 400, 'height': 400, 'crop': 'fill'},
-                    {'effect': 'art:eucalyptus', 'color': 'red:50'},
+                    {'effect': filter},
                 ]
             )
 
@@ -131,9 +134,55 @@ class FilterView(generics.CreateAPIView):
                 url=image.get('secure_url'),
                 public_id=image.get('public_id'),
                 asset_id=image.get('asset_id'),
+                width=image.get('width'),
+                height=image.get('height'),
+                bytes=image.get('bytes'),
                 galley=gallery
             )
 
+            image_up = Image.objects.get(public_id=image.get('public_id'))
+
+            serializer = self.get_serializer(image_up)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            return Response({'error': 'Invalid image'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class QualityView(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = ImageSerializer
+    queryset = Image.objects.all()
+
+    def post(self, request, quality):
+        image_file = request.data.get('image')
+        user = self.request.user
+        print(image_file)
+
+        gallery, created = Galley.objects.get_or_create(user=user)
+
+        try:
+
+            image = cloudinary.uploader.upload(
+                image_file,
+                folder='smart-pick',
+                transformation=[
+                    {
+                       'quality': quality,
+                    }
+                ]
+            )
+            Image.objects.create(
+                format=image.get('format'),
+                name=image.get('original_filename'),
+                url=image.get('secure_url'),
+                public_id=image.get('public_id'),
+                asset_id=image.get('asset_id'),
+                width=image.get('width'),
+                height=image.get('height'),
+                bytes=image.get('bytes'),
+                galley=gallery
+            )
             image_up = Image.objects.get(public_id=image.get('public_id'))
 
             serializer = self.get_serializer(image_up)

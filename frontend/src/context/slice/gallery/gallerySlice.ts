@@ -12,7 +12,7 @@ export const gallerySlice = createSlice({
     setLoadingGallery(state, action: PayloadAction<boolean>) {
       state.loading = action.payload;
     },
-    setImage(state, action: PayloadAction<IImage>) {
+    setImage(state, action: PayloadAction<IImage | null>) {
       state.image = action.payload;
     },
     setGallery(state, action: PayloadAction<IImage[]>) {

@@ -1,15 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-
 import galleryReducer from "./slice/gallery/gallerySlice";
-
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-export const useAppDispatch = () => useDispatch<AppDispatch>();
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+import configReducer from "./slice/config/configSlice";
 
 export const store = configureStore({
   reducer: {
     gallery: galleryReducer,
+    config: configReducer,
   },
+  devTools: process.env.NODE_ENV !== "production",
 });
 
 export type RootState = ReturnType<typeof store.getState>;

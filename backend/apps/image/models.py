@@ -27,6 +27,9 @@ class Image(models.Model):
     asset_id = models.CharField(max_length=100)
     galley = models.ForeignKey(
         Galley, on_delete=models.CASCADE, related_name='images')
+    width = models.IntegerField()
+    height = models.IntegerField()
+    bytes = models.IntegerField()
 
     class Meta:
         ordering = ['-created_at']

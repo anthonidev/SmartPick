@@ -10,4 +10,7 @@ interface IImage {
   format: string;
   url: string;
   public_id: string;
+  width: number;
+  height: number;
+  bytes: number;
 }

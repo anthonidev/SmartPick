@@ -1,5 +1,5 @@
 import httpImage from "@/lib/utils/HttpImage";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 import { AppDispatch } from "../../store";
 import { setGallery, setImage, setLoadingGallery } from "./gallerySlice";
 
@@ -17,7 +17,7 @@ const galleryService = (token: string) => async (dispatch: AppDispatch) => {
       dispatch(setGallery(res.data.images));
     })
     .catch((err) => {
-      toast.error("Error loading images");
+      // toast.error("Error loading images");
     })
     .finally(() => {
       dispatch(setLoadingGallery(false));
@@ -37,34 +37,59 @@ const removeBgService =
         },
       })
       .then((res) => {
-        toast.success("Image uploaded successfully");
+        // toast.success("Image uploaded successfully");
         dispatch(setImage(res.data));
       })
       .catch((err) => {
-        toast.error("Error uploading image");
+        // toast.error("Error uploading image");
       })
       .finally(() => {
         dispatch(setLoadingGallery(false));
       });
   };
 const filterService =
-  (token: string, image: any) => async (dispatch: AppDispatch) => {
+  (token: string, image: any, filter: string) =>
+  async (dispatch: AppDispatch) => {
     dispatch(setLoadingGallery(true));
     const formData = new FormData();
     formData.append("image", image);
 
     await httpImage
-      .post("/api/image/filter/", formData, {
+      .post(`/api/image/filter/${filter}/`, formData, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
-        toast.success("Image uploaded successfully");
+        // toast.success("Image uploaded successfully");
         dispatch(setImage(res.data));
       })
       .catch((err) => {
-        toast.error("Error uploading image");
+        // toast.error("Error uploading image");
+      })
+      .finally(() => {
+        dispatch(setLoadingGallery(false));
+      });
+  };
+const qualityService =
+  (token: string, image: any, quality: string) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(setLoadingGallery(true));
+    const formData = new FormData();
+    formData.append("image", image);
+
+    await httpImage
+      .post(`/api/image/quality/${quality}/`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        // toast.success("Image uploaded successfully");
+        dispatch(setImage(res.data));
+      })
+      .catch((err) => {
+        // toast.error("Error uploading image");
       })
       .finally(() => {
         dispatch(setLoadingGallery(false));
@@ -73,6 +98,8 @@ const filterService =
 
 const getImageService =
   (token: string, public_id: string) => async (dispatch: AppDispatch) => {
+    console.log("public_id", public_id);
+
     dispatch(setLoadingGallery(true));
     await httpImage
       .get(`/api/image/gallery/${public_id}/`, {
@@ -81,16 +108,20 @@ const getImageService =
         },
       })
       .then((res) => {
-        console.log("getImageService", res.data);
-
         dispatch(setImage(res.data));
       })
       .catch((err) => {
-        toast.error("Error loading image");
+        // toast.error("Error loading image");
       })
       .finally(() => {
         dispatch(setLoadingGallery(false));
       });
   };
 
-export { removeBgService, galleryService, getImageService, filterService };
+export {
+  removeBgService,
+  galleryService,
+  getImageService,
+  filterService,
+  qualityService,
+};
