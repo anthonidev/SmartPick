@@ -1,9 +1,8 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { setSidebar } from "@/context/slice/config/configSlice";
-import { navigation } from "@/lib/data/navigation";
 import { Dialog, Transition } from "@headlessui/react";
-import { Cog6ToothIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import Image from "next/image";
 import { Fragment } from "react";
 
@@ -83,7 +82,7 @@ const MobileSidebar = ({}: Props) => {
                     height={50}
                   />
                 </div>
-                <nav className="flex flex-1 flex-col">
+                {/* <nav className="flex flex-1 flex-col">
                   <ul role="list" className="flex flex-1 flex-col gap-y-7">
                     <li>
                       <ul role="list" className="-mx-2 space-y-1">
@@ -122,7 +121,7 @@ const MobileSidebar = ({}: Props) => {
                       </a>
                     </li>
                   </ul>
-                </nav>
+                </nav> */}
               </div>
             </Dialog.Panel>
           </Transition.Child>

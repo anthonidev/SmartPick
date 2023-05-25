@@ -1,6 +1,8 @@
 "use client";
 import CompareImage from "@/components/shared/compare-image";
 import InputImage from "@/components/shared/input-image";
+import ButtonDownload from "@/components/ui/button-download";
+import InfoImage from "@/components/ui/info-image";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { setImage } from "@/context/slice/gallery/gallerySlice";
 import { removeBgService } from "@/context/slice/gallery/service";
@@ -50,14 +52,12 @@ const RemoveBg = ({ session }: Props) => {
             />
           </div>
           <div className="mt-1 overflow-hidden col-span-4  row-span-1 ">
-            <div className="flex justify-center items-center h-full">
-              <button
-                type="button"
-                onClick={handleDownload}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
-              >
-                Descargar
-              </button>
+            <div className="flex justify-center items-center h-full flex-col space-y-5">
+              {uploadedFile && image && (
+                <InfoImage image={image} uploadedFile={uploadedFile} />
+              )}
+
+              <ButtonDownload handleDownload={handleDownload} />
             </div>
           </div>
         </div>
