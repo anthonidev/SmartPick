@@ -1,6 +1,7 @@
 "use client";
 import CompareImage from "@/components/shared/compare-image";
 import InputImage from "@/components/shared/input-image";
+import ArrowLoading from "@/components/ui/arrow-loading";
 import ButtonDownload from "@/components/ui/button-download";
 import InfoImage from "@/components/ui/info-image";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
@@ -75,7 +76,7 @@ const RemoveBg = ({ session }: Props) => {
           </div>
           {loading && (
             <div className="flex justify-center mt-10 w-1/2">
-              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+              <ArrowLoading />
             </div>
           )}
         </div>

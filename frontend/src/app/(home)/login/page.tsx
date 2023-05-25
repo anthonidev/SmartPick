@@ -4,7 +4,7 @@ import Image from "next/image";
 export default function LoginPage() {
   return (
     <>
-      <div className="flex min-h-full flex-1">
+      <div className="flex min-h-full flex-1 bg-primary-200 from-primary-500 via-secondary-700 to-primary-500">
         <div className="flex flex-1 flex-col justify-center px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
           <div className="mx-auto w-full max-w-sm lg:w-96">
             <div className="flex flex-col justify-center items-center">
@@ -16,7 +16,7 @@ export default function LoginPage() {
               />
 
               <h2 className="mt-8 text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                Iniciar sesión o crear una cuenta
+                Iniciar sesión o crea una cuenta
               </h2>
             </div>
             <Login />

@@ -33,7 +33,7 @@ const items: {
     name: "Galeria",
     description: "Mis imágenes",
     url: "/dashboard/gallery",
-    color: "bg-indigo-500",
+    color: "bg-red-500",
     icon: PhotoIcon,
   },
   {
@@ -41,7 +41,7 @@ const items: {
     name: "Remover fondo",
     description: " Remover fondo de imagen",
     url: "/dashboard/remove-bg",
-    color: "bg-indigo-500",
+    color: "bg-yellow-500",
     icon: ClipboardDocumentCheckIcon,
   },
   {
@@ -50,7 +50,7 @@ const items: {
     description: "Aplicar filtros a imagen",
     url: "/dashboard/filter",
 
-    color: "bg-indigo-500",
+    color: "bg-green-500",
     icon: FunnelIcon,
   },
   {
@@ -58,7 +58,7 @@ const items: {
     name: "Optimización",
     description: "Optimizar imagen",
     url: "/dashboard/optimization",
-    color: "bg-indigo-500",
+    color: "bg-violet-500",
     icon: ArrowsPointingInIcon,
   },
 ];

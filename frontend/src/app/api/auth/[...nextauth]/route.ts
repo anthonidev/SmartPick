@@ -3,6 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import axios from "axios";
 import type { NextAuthOptions } from "next-auth";
 import jwt from "jsonwebtoken";
+import FacebookProvider from "next-auth/providers/facebook";
 
 namespace JwtUtils {
   export const isJwtExpired = (token: string) => {
@@ -33,6 +34,10 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
+    FacebookProvider({
+      clientId: process.env.FACEBOOK_CLIENT_ID as string,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET as string,
+    }),
   ],
 
   secret: process.env.NEXTAUTH_SECRET,
@@ -61,6 +66,27 @@ export const authOptions: NextAuthOptions = {
             );
 
             const { access_token, refresh_token } = response.data;
+            token = {
+              ...token,
+              accessToken: access_token,
+              refreshToken: refresh_token,
+            };
+
+            return token;
+          } catch (error) {
+            return token;
+          }
+        } else if (account?.provider === "facebook") {
+          try {
+            const response = await axios.post(
+              `${process.env.NEXT_PUBLIC_API_URL}/api/social/login/facebook/`,
+              {
+                access_token: account.access_token,
+                id_token: account.id_token,
+              }
+            );
+            const { access_token, refresh_token } = response.data;
+
             token = {
               ...token,
               accessToken: access_token,

@@ -1,5 +1,6 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import ImageItem from "@/components/dashboard/image-item";
+import SkeletonMainGrid from "@/components/ui/skeleton-grid";
 import { getGallery } from "@/context/actions/get-gallery";
 import { getServerSession } from "next-auth";
 import { Suspense } from "react";
@@ -26,7 +27,7 @@ export default async function Page() {
           voluptate ex deserunt ullam, doloremque corrupti nostrum dignissimos
         </p>
       </div>
-      <Suspense fallback={<>cargando</>}>
+      <Suspense fallback={<SkeletonMainGrid />}>
         {/* @ts-expect-error Server Component */}
 
         <GalleryList promise={gallery} />

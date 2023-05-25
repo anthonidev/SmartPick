@@ -13,6 +13,7 @@ import RadioButton from "@/components/ui/radio-button";
 import { filters } from "@/lib/data/filters";
 import InfoImage from "@/components/ui/info-image";
 import ButtonDownload from "@/components/ui/button-download";
+import ArrowLoading from "@/components/ui/arrow-loading";
 
 type Props = {
   session: Session;
@@ -104,7 +105,7 @@ const Filter = ({ session }: Props) => {
 
           {loading && (
             <div className="flex justify-center mt-10 w-1/2">
-              <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-gray-900"></div>
+              <ArrowLoading />
             </div>
           )}
         </div>
