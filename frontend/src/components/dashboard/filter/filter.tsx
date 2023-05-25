@@ -1,7 +1,7 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import useFile from "@/lib/hooks/use-file";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { saveAs } from "file-saver";
 import { toast } from "react-toastify";
 import { Session } from "next-auth/core/types";
@@ -11,6 +11,8 @@ import InputImage from "@/components/shared/input-image";
 import { setImage } from "@/context/slice/gallery/gallerySlice";
 import RadioButton from "@/components/ui/radio-button";
 import { filters } from "@/lib/data/filters";
+import InfoImage from "@/components/ui/info-image";
+import ButtonDownload from "@/components/ui/button-download";
 
 type Props = {
   session: Session;
@@ -22,7 +24,11 @@ const Filter = ({ session }: Props) => {
 
   const { image, loading } = useAppSelector((state) => state.gallery);
   const dispatch = useAppDispatch();
-
+  useEffect(() => {
+    if (image) {
+      dispatch(setImage(null));
+    }
+  }, []);
   const handleDownload = () => {
     if (image) {
       saveAs(`${image.url}`, `${image.name}.png`);
@@ -65,14 +71,12 @@ const Filter = ({ session }: Props) => {
             />
           </div>
           <div className="mt-1 overflow-hidden col-span-4  row-span-1 ">
-            <div className="flex justify-center items-center h-full">
-              <button
-                type="button"
-                onClick={handleDownload}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
-              >
-                Descargar
-              </button>
+            <div className="flex justify-center items-center h-full flex-col space-y-5">
+              {uploadedFile && image && (
+                <InfoImage image={image} uploadedFile={uploadedFile} />
+              )}
+
+              <ButtonDownload handleDownload={handleDownload} />
             </div>
           </div>
         </div>

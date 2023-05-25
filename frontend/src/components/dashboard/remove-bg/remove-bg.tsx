@@ -9,6 +9,7 @@ import { removeBgService } from "@/context/slice/gallery/service";
 import useFile from "@/lib/hooks/use-file";
 import { saveAs } from "file-saver";
 import { Session } from "next-auth/core/types";
+import { useEffect } from "react";
 import { toast } from "react-toastify";
 
 type Props = {
@@ -19,6 +20,12 @@ const RemoveBg = ({ session }: Props) => {
   const { handleUpload, uploadedFile, resetUpload } = useFile();
   const { image, loading } = useAppSelector((state) => state.gallery);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (image) {
+      dispatch(setImage(null));
+    }
+  }, []);
 
   const handleDownload = () => {
     if (image) {

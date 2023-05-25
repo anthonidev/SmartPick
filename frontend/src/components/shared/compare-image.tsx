@@ -7,7 +7,7 @@ type Props = {
   image2: string;
 };
 
-const CompareImage = (props: Props) => {
+const CompareImage = ({ image1, image2 }: Props) => {
   return (
     <>
       <ReactCompareSlider
@@ -17,16 +17,16 @@ const CompareImage = (props: Props) => {
         }}
         itemOne={
           <ReactCompareSliderImage
-            src={props.image1}
-            srcSet={props.image1}
+            src={image1}
+            srcSet={image1}
             alt="Image one"
             style={{ objectFit: "contain" }}
           />
         }
         itemTwo={
           <ReactCompareSliderImage
-            src={props.image2}
-            srcSet={props.image2}
+            src={image2}
+            srcSet={image2}
             alt="Image two"
             style={{ objectFit: "contain" }}
           />

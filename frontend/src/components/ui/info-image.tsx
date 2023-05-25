@@ -7,7 +7,6 @@ type Props = {
 };
 
 const InfoImage = ({ image, uploadedFile }: Props) => {
-  console.log(uploadedFile);
   return (
     <div className="max-w-2xl overflow-hidden bg-white shadow sm:rounded-lg">
       <div className="px-4 py-5 sm:px-6">

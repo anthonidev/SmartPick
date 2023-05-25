@@ -1,6 +1,7 @@
 "use client";
 import CompareImage from "@/components/shared/compare-image";
 import InputImage from "@/components/shared/input-image";
+import ButtonDownload from "@/components/ui/button-download";
 import RadioButtonNumber from "@/components/ui/radio-button-number";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { setImage } from "@/context/slice/gallery/gallerySlice";
@@ -10,7 +11,7 @@ import useFile from "@/lib/hooks/use-file";
 import { BytesToMegabytes } from "@/lib/utils/size";
 import { saveAs } from "file-saver";
 import { Session } from "next-auth/core/types";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 type Props = {
@@ -20,7 +21,11 @@ type Props = {
 const Optimization = ({ session }: Props) => {
   const { handleUpload, uploadedFile, resetUpload } = useFile();
   const [selectedMailingLists, setSelectedMailingLists] = useState(quality[0]);
-
+  useEffect(() => {
+    if (image) {
+      dispatch(setImage(null));
+    }
+  }, []);
   const { image, loading } = useAppSelector((state) => state.gallery);
   const dispatch = useAppDispatch();
 
@@ -84,13 +89,7 @@ const Optimization = ({ session }: Props) => {
             </div>
 
             <div className="flex justify-center items-center h-full">
-              <button
-                type="button"
-                onClick={handleDownload}
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
-              >
-                Descargar
-              </button>
+              <ButtonDownload handleDownload={handleDownload} />
             </div>
           </div>
         </div>
@@ -141,7 +140,7 @@ const Optimization = ({ session }: Props) => {
               onClick={() => resetFunction(false)}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
-              Aplicar otro filtro
+              Aplicar otra calidad
             </button>
           )}
 
@@ -151,7 +150,7 @@ const Optimization = ({ session }: Props) => {
               onClick={handleRemoveBg}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
-              Aplicar filtro
+              Optimizar imagen
             </button>
           )}
         </div>

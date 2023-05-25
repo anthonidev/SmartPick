@@ -60,13 +60,11 @@ export const authOptions: NextAuthOptions = {
               }
             );
 
-            const { access_token, refresh_token, is_configured } =
-              response.data;
+            const { access_token, refresh_token } = response.data;
             token = {
               ...token,
               accessToken: access_token,
               refreshToken: refresh_token,
-              is_configured: is_configured,
             };
 
             return token;
@@ -84,14 +82,13 @@ export const authOptions: NextAuthOptions = {
               refresh: token.refreshToken,
             }
           );
-          const { access, refresh, is_configured } = response.data;
+          const { access, refresh } = response.data;
 
           if (access && refresh) {
             token = {
               ...token,
               accessToken: access,
               refreshToken: refresh,
-              is_configured: is_configured,
 
               iat: Math.floor(Date.now() / 1000),
               exp: Math.floor(Date.now() / 1000 + 2 * 60 * 60),
