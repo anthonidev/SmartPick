@@ -157,7 +157,6 @@ class QualityView(generics.CreateAPIView):
     def post(self, request, quality):
         image_file = request.data.get('image')
         user = self.request.user
-        print(image_file)
 
         gallery, created = Galley.objects.get_or_create(user=user)
 
@@ -172,6 +171,119 @@ class QualityView(generics.CreateAPIView):
                     }
                 ]
             )
+            Image.objects.create(
+                format=image.get('format'),
+                name=image.get('original_filename'),
+                url=image.get('secure_url'),
+                public_id=image.get('public_id'),
+                asset_id=image.get('asset_id'),
+                width=image.get('width'),
+                height=image.get('height'),
+                bytes=image.get('bytes'),
+                galley=gallery
+            )
+            image_up = Image.objects.get(public_id=image.get('public_id'))
+
+            serializer = self.get_serializer(image_up)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            return Response({'error': 'Invalid image'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class FaceDetectionView(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = ImageSerializer
+    queryset = Image.objects.all()
+
+    def post(self, request):
+        user = self.request.user
+        data = request.data
+
+        width = data.get('width')
+        height = data.get('height')
+        crop = data.get('crop')
+        image_file = data.get('image')
+        zoom = data.get('zoom')
+        gravity = data.get('gravity')
+
+        print(width, height, crop, image_file)
+
+        gallery, created = Galley.objects.get_or_create(user=user)
+
+        try:
+
+            image = cloudinary.uploader.upload(
+                image_file,
+                folder='smart-pick',
+                transformation=[
+                    {
+                        'gravity': gravity,
+                        'width': width,
+                        'height': height,
+                        'crop': crop,
+                        'zoom': zoom,
+                    }
+                ]
+            )
+            print(image)
+            Image.objects.create(
+                format=image.get('format'),
+                name=image.get('original_filename'),
+                url=image.get('secure_url'),
+                public_id=image.get('public_id'),
+                asset_id=image.get('asset_id'),
+                width=image.get('width'),
+                height=image.get('height'),
+                bytes=image.get('bytes'),
+                galley=gallery
+            )
+            image_up = Image.objects.get(public_id=image.get('public_id'))
+
+            serializer = self.get_serializer(image_up)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            print(e)
+            return Response({'error': 'Invalid image'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class SizeCropView(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = ImageSerializer
+    queryset = Image.objects.all()
+
+    def post(self, request):
+        user = self.request.user
+        data = request.data
+
+        width = data.get('width')
+        height = data.get('height')
+        crop = data.get('crop')
+        image_file = data.get('image')
+        zoom = data.get('zoom')
+        gravity = data.get('gravity')
+
+        print(width, height, crop, image_file)
+
+        gallery, created = Galley.objects.get_or_create(user=user)
+
+        try:
+
+            image = cloudinary.uploader.upload(
+                image_file,
+                folder='smart-pick',
+                transformation=[
+                    {
+                        'gravity': gravity,
+                        'width': width,
+                        'height': height,
+                        'crop': crop,
+                        'zoom': zoom,
+                        'background': 'auto',
+                    }
+                ]
+            )
+            print(image)
             Image.objects.create(
                 format=image.get('format'),
                 name=image.get('original_filename'),

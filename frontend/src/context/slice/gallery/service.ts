@@ -118,10 +118,88 @@ const getImageService =
       });
   };
 
+const faceDetectionService =
+  (
+    token: string,
+    image: any,
+    height: number,
+    width: number,
+    crop: string,
+    zoom: number,
+    gravity: string
+  ) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(setLoadingGallery(true));
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("height", height.toString());
+    formData.append("width", width.toString());
+    formData.append("crop", crop);
+    formData.append("zoom", zoom.toString());
+    formData.append("gravity", gravity);
+
+    await httpImage
+      .post(`/api/image/face-detection/`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        // toast.success("Image uploaded successfully");
+        dispatch(setImage(res.data));
+      })
+      .catch((err) => {
+        // toast.error("Error uploading image");
+      })
+      .finally(() => {
+        dispatch(setLoadingGallery(false));
+      });
+  };
+
+const sizeCropService =
+  (
+    token: string,
+    image: any,
+    height: number,
+    width: number,
+    crop: string,
+    zoom: number,
+    gravity: string
+  ) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(setLoadingGallery(true));
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("height", height.toString());
+    formData.append("width", width.toString());
+    formData.append("crop", crop);
+    formData.append("zoom", zoom.toString());
+    formData.append("gravity", gravity);
+
+    await httpImage
+      .post(`/api/image/size-crop/`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        // toast.success("Image uploaded successfully");
+        dispatch(setImage(res.data));
+      })
+      .catch((err) => {
+        // toast.error("Error uploading image");
+      })
+      .finally(() => {
+        dispatch(setLoadingGallery(false));
+      });
+  };
+
 export {
+  sizeCropService,
   removeBgService,
   galleryService,
   getImageService,
   filterService,
   qualityService,
+  faceDetectionService,
 };

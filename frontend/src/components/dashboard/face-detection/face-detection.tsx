@@ -3,11 +3,12 @@ import CompareImage from "@/components/shared/compare-image";
 import InputImage from "@/components/shared/input-image";
 import ArrowLoading from "@/components/ui/arrow-loading";
 import ButtonDownload from "@/components/ui/button-download";
+import InputNumber from "@/components/ui/input-number";
 import RadioButtonNumber from "@/components/ui/radio-button-number";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { setImage } from "@/context/slice/gallery/gallerySlice";
-import { qualityService } from "@/context/slice/gallery/service";
-import { quality } from "@/lib/data/filters";
+import { faceDetectionService } from "@/context/slice/gallery/service";
+import { crop, face } from "@/lib/data/face-detection";
 import useFile from "@/lib/hooks/use-file";
 import { BytesToMegabytes } from "@/lib/utils/size";
 import { saveAs } from "file-saver";
@@ -19,16 +20,21 @@ type Props = {
   session: Session;
 };
 
-const Optimization = ({ session }: Props) => {
+const FaceDetection = ({ session }: Props) => {
+  const dispatch = useAppDispatch();
+  const { image, loading } = useAppSelector((state) => state.gallery);
   const { handleUpload, uploadedFile, resetUpload } = useFile();
-  const [selectedMailingLists, setSelectedMailingLists] = useState(quality[0]);
+  const [selectedMailingLists, setSelectedMailingLists] = useState(crop[0]);
+  const [selectedFace, setSelectedFace] = useState(face[0]);
+  const [height, setHeight] = useState(200);
+  const [width, setWidth] = useState(200);
+  const [zoom, setZoom] = useState(1.0);
+
   useEffect(() => {
     if (image) {
       dispatch(setImage(null));
     }
   }, []);
-  const { image, loading } = useAppSelector((state) => state.gallery);
-  const dispatch = useAppDispatch();
 
   const handleDownload = () => {
     if (image) {
@@ -43,10 +49,14 @@ const Optimization = ({ session }: Props) => {
     }
     if (session?.accessToken) {
       dispatch(
-        qualityService(
+        faceDetectionService(
           session.accessToken,
           uploadedFile,
-          selectedMailingLists.name
+          height,
+          width,
+          selectedMailingLists.value,
+          zoom,
+          selectedFace.value
         )
       );
     }
@@ -108,12 +118,33 @@ const Optimization = ({ session }: Props) => {
               className="w-1/2 overflow-y-auto px-4"
               style={{ height: "500px" }}
             >
-              <RadioButtonNumber
+              <RadioButtonNumber<ICrop>
                 select={selectedMailingLists}
                 setSelect={setSelectedMailingLists}
-                values={quality}
-                title="Calidad"
+                values={crop}
+                title="Tipo de recorte"
+                className="grid-cols-2 sm:grid-cols-3"
               />
+              <RadioButtonNumber<ICrop>
+                select={selectedFace}
+                setSelect={setSelectedFace}
+                values={face}
+                title="Cantidad de rostros"
+                className="grid-cols-2 "
+              />
+              <div className="flex space-x-5">
+                <InputNumber value={height} onChange={setHeight} label="Alto" />
+                <InputNumber value={width} onChange={setWidth} label="Ancho" />
+                <InputNumber
+                  value={zoom}
+                  onChange={setZoom}
+                  label="Zoom"
+                  step={0.1}
+                  min={0}
+                  pattern="^\d*(\.\d{0,2})?$"
+                  type=""
+                />
+              </div>
             </div>
           )}
 
@@ -142,7 +173,7 @@ const Optimization = ({ session }: Props) => {
               onClick={() => resetFunction(false)}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
-              Aplicar otra calidad
+              Aplicar otro recorte
             </button>
           )}
 
@@ -152,7 +183,7 @@ const Optimization = ({ session }: Props) => {
               onClick={handleRemoveBg}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
-              Optimizar imagen
+              Detectar rostro
             </button>
           )}
         </div>
@@ -161,4 +192,4 @@ const Optimization = ({ session }: Props) => {
   );
 };
 
-export default Optimization;
+export default FaceDetection;

@@ -16,3 +16,8 @@ interface INavigation {
   icon: any;
   current?: boolean;
 }
+
+interface ICrop {
+  value: string;
+  name: string;
+}
