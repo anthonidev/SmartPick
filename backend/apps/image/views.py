@@ -21,6 +21,25 @@ class GalleyView(generics.ListAPIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+class DeleteImageView(generics.DestroyAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = GalleySerializer
+    queryset = Galley.objects.all()
+
+    def delete(self, request, pk):
+
+        if Image.objects.filter(id=pk).exists():
+            image = Image.objects.get(id=pk)
+            try:
+                cloudinary.uploader.destroy(image.public_id)
+                image.delete()
+                print("todo correcto eliminado")
+            except:
+                return Response("Image not deleted", status=status.HTTP_400_BAD_REQUEST)
+
+        return Response("Image deleted", status=status.HTTP_200_OK)
+
+
 class RemoveBgView(generics.CreateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = ImageSerializer
@@ -161,7 +180,6 @@ class QualityView(generics.CreateAPIView):
         gallery, created = Galley.objects.get_or_create(user=user)
 
         try:
-
             image = cloudinary.uploader.upload(
                 image_file,
                 folder='smart-pick',
@@ -183,7 +201,6 @@ class QualityView(generics.CreateAPIView):
                 galley=gallery
             )
             image_up = Image.objects.get(public_id=image.get('public_id'))
-
             serializer = self.get_serializer(image_up)
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
@@ -274,12 +291,12 @@ class SizeCropView(generics.CreateAPIView):
                 folder='smart-pick',
                 transformation=[
                     {
-                        'gravity': gravity,
+                        # 'gravity': gravity,
                         'width': width,
                         'height': height,
                         'crop': crop,
                         'zoom': zoom,
-                        'background': 'auto',
+                        # 'background': 'auto',
                     }
                 ]
             )

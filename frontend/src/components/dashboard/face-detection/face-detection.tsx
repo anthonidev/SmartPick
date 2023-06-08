@@ -26,8 +26,8 @@ const FaceDetection = ({ session }: Props) => {
   const { handleUpload, uploadedFile, resetUpload } = useFile();
   const [selectedMailingLists, setSelectedMailingLists] = useState(crop[0]);
   const [selectedFace, setSelectedFace] = useState(face[0]);
-  const [height, setHeight] = useState(200);
-  const [width, setWidth] = useState(200);
+  const [height, setHeight] = useState(500);
+  const [width, setWidth] = useState(500);
   const [zoom, setZoom] = useState(1.0);
 
   useEffect(() => {
@@ -83,8 +83,8 @@ const FaceDetection = ({ session }: Props) => {
           </div>
           <div className="mt-1 overflow-hidden col-span-4  row-span-1 ">
             <div className="text-gray-500">
-              <span className="text-gray-800">Calidad seleccionada: </span>
-              <span className="font-bold">{selectedMailingLists.value}</span>
+              <span className="text-gray-800">Tipo de recorte: </span>
+              <span className="font-bold">{selectedMailingLists.name}</span>
             </div>
             <div className="text-gray-500">
               <span className="text-gray-800">Peso antes: </span>
@@ -109,8 +109,8 @@ const FaceDetection = ({ session }: Props) => {
           <div className="w-1/2 ">
             <InputImage onUpload={handleUpload} uploadedFile={uploadedFile} />
             <div className="text-gray-800">
-              Calidad seleccionada:{" "}
-              <span className="font-bold">{selectedMailingLists.value}</span>
+              Tipo de recorte:{" "}
+              <span className="font-bold">{selectedMailingLists.name}</span>
             </div>
           </div>
           {!loading && (

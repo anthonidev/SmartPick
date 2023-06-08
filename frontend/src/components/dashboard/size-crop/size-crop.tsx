@@ -83,8 +83,8 @@ const SizeCrop = ({ session }: Props) => {
           </div>
           <div className="mt-1 overflow-hidden col-span-4  row-span-1 ">
             <div className="text-gray-500">
-              <span className="text-gray-800">Calidad seleccionada: </span>
-              <span className="font-bold">{selectedMailingLists.value}</span>
+              <span className="text-gray-800">Tipo de recorte: </span>
+              <span className="font-bold">{selectedMailingLists.name}</span>
             </div>
             <div className="text-gray-500">
               <span className="text-gray-800">Peso antes: </span>
@@ -109,8 +109,8 @@ const SizeCrop = ({ session }: Props) => {
           <div className="w-1/2 ">
             <InputImage onUpload={handleUpload} uploadedFile={uploadedFile} />
             <div className="text-gray-800">
-              Calidad seleccionada:{" "}
-              <span className="font-bold">{selectedMailingLists.value}</span>
+              Tipo de recorte:{" "}
+              <span className="font-bold">{selectedMailingLists.name}</span>
             </div>
           </div>
           {!loading && (
@@ -125,13 +125,13 @@ const SizeCrop = ({ session }: Props) => {
                 title="Tipo de recorte"
                 className="grid-cols-2 sm:grid-cols-3"
               />
-              <RadioButtonNumber<ICrop>
+              {/* <RadioButtonNumber<ICrop>
                 select={selectedFace}
                 setSelect={setSelectedFace}
                 values={gravity}
                 title="Cantidad de rostros"
                 className="grid-cols-2 "
-              />
+              /> */}
               <div className="flex space-x-5">
                 <InputNumber value={height} onChange={setHeight} label="Alto" />
                 <InputNumber value={width} onChange={setWidth} label="Ancho" />
@@ -183,7 +183,7 @@ const SizeCrop = ({ session }: Props) => {
               onClick={handleRemoveBg}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             >
-              Detectar rostro
+              Aplicar recorte
             </button>
           )}
         </div>

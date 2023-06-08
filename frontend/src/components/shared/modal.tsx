@@ -1,6 +1,6 @@
 import React, { Dispatch, Fragment, SetStateAction } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { CheckIcon, XMarkIcon } from "@heroicons/react/24/solid";
+import { XMarkIcon } from "@heroicons/react/24/solid";
 
 type Props = {
   setShowModal: Dispatch<SetStateAction<boolean>>;
@@ -21,7 +21,7 @@ const ModalPrimary = ({
     <Transition appear show={showModal} as={Fragment}>
       <Dialog
         as="div"
-        className="relative z-40"
+        className="relative z-50"
         onClose={() => setShowModal(false)}
       >
         <Transition.Child
