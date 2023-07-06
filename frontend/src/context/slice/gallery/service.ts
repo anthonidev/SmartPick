@@ -193,8 +193,35 @@ const sizeCropService =
         dispatch(setLoadingGallery(false));
       });
   };
+const convertFormatService =
+  (token: string, image: any, format: string, to_format: string) =>
+  async (dispatch: AppDispatch) => {
+    dispatch(setLoadingGallery(true));
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("format", format);
+    formData.append("to_format", to_format);
+
+    await httpImage
+      .post(`/api/image/convert/`, formData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        // toast.success("Image uploaded successfully");
+        dispatch(setImage(res.data));
+      })
+      .catch((err) => {
+        // toast.error("Error uploading image");
+      })
+      .finally(() => {
+        dispatch(setLoadingGallery(false));
+      });
+  };
 
 export {
+  convertFormatService,
   sizeCropService,
   removeBgService,
   galleryService,

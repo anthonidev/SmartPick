@@ -48,7 +48,6 @@ class RemoveBgView(generics.CreateAPIView):
     def post(self, request):
         image_file = request.data.get('image')
         user = self.request.user
-        print(image_file)
 
         gallery, created = Galley.objects.get_or_create(user=user)
 
@@ -318,4 +317,68 @@ class SizeCropView(generics.CreateAPIView):
             return Response(serializer.data, status=status.HTTP_200_OK)
         except Exception as e:
             print(e)
+            return Response({'error': 'Invalid image'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+def convert_image(input_path, output_path, output_format):
+    image = Img.open(input_path)
+
+    # Convertir imagen RGBA a RGB
+    if image.mode == 'RGBA':
+        image = image.convert('RGB')
+
+    image.save(output_path, format=output_format)
+
+
+class ConvertFormatView(generics.CreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = ImageSerializer
+    queryset = Image.objects.all()
+
+    def post(self, request):
+        user = self.request.user
+        data = request.data
+        gallery, created = Galley.objects.get_or_create(user=user)
+
+        input_path = data.get('image')
+        imput_format = data.get('format')
+        output_format = data.get('to_format')
+
+        try:
+            string_image = f"{input_path}"
+            output_path = string_image.replace(
+                imput_format.lower(), output_format.lower())
+        except Exception as e:
+            print(e)
+            return Response({'error': 'Invalid image'}, status=status.HTTP_400_BAD_REQUEST)
+        print(input_path, output_path, output_format)
+
+        try:
+            try:
+                convert_image(input_path, output_path, output_format)
+            except Exception as e:
+                print(e)
+            image_upload = open(output_path, 'rb')
+            image = cloudinary.uploader.upload(
+                image_upload,
+                folder='smart-pick',
+            )
+            Image.objects.create(
+                format=image.get('format'),
+                name=image.get('original_filename'),
+                url=image.get('secure_url'),
+                public_id=image.get('public_id'),
+                asset_id=image.get('asset_id'),
+                galley=gallery,
+                width=image.get('width'),
+                height=image.get('height'),
+                bytes=image.get('bytes'),
+            )
+            image_upload.close()
+            remove_file(output_path)
+            image_up = Image.objects.get(public_id=image.get('public_id'))
+            serializer = self.get_serializer(image_up)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            print("errpr", e)
             return Response({'error': 'Invalid image'}, status=status.HTTP_400_BAD_REQUEST)

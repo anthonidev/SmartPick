@@ -8,8 +8,8 @@ const crop: ICrop[] = [
   // { value: "limit", name: "limitar" },
   // { value: "mfit", name: "ajuste inteligente" },
   // { value: "mpad", name: "rellenar inteligente" },
-  { value: "pad", name: "rellenar" },
-  { value: "scale", name: "escalar" },
+  // { value: "pad", name: "rellenar" },
+  // { value: "scale", name: "escalar" },
 ];
 
 const gravity: ICrop[] = [
@@ -18,4 +18,12 @@ const gravity: ICrop[] = [
   { value: "north_west", name: "noroeste" },
 ];
 
-export { crop, gravity };
+const format: ICrop[] = [
+  { value: "image/jpg", name: "jpg" },
+  { value: "image/png", name: "png" },
+  { value: "image/webp", name: "webp" },
+  { value: "image/svg", name: "svg" },
+  { value: "image/jpeg", name: "jpeg" },
+];
+
+export { crop, gravity, format };

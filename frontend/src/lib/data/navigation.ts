@@ -6,10 +6,11 @@ import {
   ArrowsPointingInIcon,
   FaceSmileIcon,
   ScissorsIcon,
+  SwatchIcon,
 } from "@heroicons/react/24/solid";
 
 const navigation = [
-  { name: "Dashboard", href: undefined, icon: HomeIcon },
+  { name: "Inicio", href: undefined, icon: HomeIcon },
   { name: "Galería", href: "gallery", icon: PhotoIcon },
   {
     name: "Remover Fondo",
@@ -27,6 +28,11 @@ const navigation = [
     name: "tamaño y recorte",
     href: "size-crop",
     icon: ScissorsIcon,
+  },
+  {
+    name: "Convertidor",
+    href: "convert",
+    icon: SwatchIcon,
   },
 ];
 

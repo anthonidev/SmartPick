@@ -9,5 +9,11 @@ const face: ICrop[] = [
   { value: "face", name: "uno" },
   { value: "faces", name: "varios" },
 ];
-
-export { crop, face };
+const format: ICrop[] = [
+  // { value: "image/jpg", name: "jpg" },
+  { value: "image/png", name: "png" },
+  { value: "image/webp", name: "webp" },
+  // { value: "image/svg", name: "svg" },
+  { value: "image/jpeg", name: "jpeg" },
+];
+export { crop, face, format };
