@@ -3,7 +3,6 @@ import Button from "@/components/shared/Button";
 import CompareImage from "@/components/shared/compare-image";
 import InputImage from "@/components/shared/input-image";
 import ArrowLoading from "@/components/ui/arrow-loading";
-import ButtonDownload from "@/components/ui/button-download";
 import InfoImage from "@/components/ui/info-image";
 import InputNumber from "@/components/ui/input-number";
 import RadioButtonNumber from "@/components/ui/radio-button-number";
@@ -12,7 +11,6 @@ import { setImage } from "@/context/slice/gallery/gallerySlice";
 import { faceDetectionService } from "@/context/slice/gallery/service";
 import { crop, face } from "@/lib/data/face-detection";
 import useFile from "@/lib/hooks/use-file";
-import { BytesToMegabytes } from "@/lib/utils/size";
 import { saveAs } from "file-saver";
 import { Session } from "next-auth/core/types";
 import { useEffect, useState } from "react";
@@ -21,7 +19,7 @@ import {
   AiOutlineDownload,
   AiOutlineFilter,
 } from "react-icons/ai";
-import { FaImages } from "react-icons/fa";
+import { TbFaceId } from "react-icons/tb";
 import { toast } from "react-toastify";
 
 type Props = {
@@ -109,7 +107,7 @@ const FaceDetection = ({ session }: Props) => {
               type="button"
               onClick={handleRemoveBg}
               typeButton="action"
-              Icon={FaImages}
+              Icon={TbFaceId}
             >
               Detectar rostro
             </Button>

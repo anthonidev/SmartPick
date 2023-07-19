@@ -1,26 +1,25 @@
 "use client";
-import { useAppDispatch, useAppSelector } from "@/context/hooks";
-import useFile from "@/lib/hooks/use-file";
-import { useEffect, useState } from "react";
-import { saveAs } from "file-saver";
-import { toast } from "react-toastify";
-import { Session } from "next-auth/core/types";
-import { filterService } from "@/context/slice/gallery/service";
+import Button from "@/components/shared/Button";
 import CompareImage from "@/components/shared/compare-image";
 import InputImage from "@/components/shared/input-image";
-import { setImage } from "@/context/slice/gallery/gallerySlice";
-import RadioButton from "@/components/ui/radio-button";
-import { filters } from "@/lib/data/filters";
-import InfoImage from "@/components/ui/info-image";
-import ButtonDownload from "@/components/ui/button-download";
 import ArrowLoading from "@/components/ui/arrow-loading";
+import InfoImage from "@/components/ui/info-image";
+import RadioButton from "@/components/ui/radio-button";
+import { useAppDispatch, useAppSelector } from "@/context/hooks";
+import { setImage } from "@/context/slice/gallery/gallerySlice";
+import { filterService } from "@/context/slice/gallery/service";
+import { filters } from "@/lib/data/filters";
+import useFile from "@/lib/hooks/use-file";
+import { saveAs } from "file-saver";
+import { Session } from "next-auth/core/types";
+import { useEffect, useState } from "react";
 import {
   AiFillPlusSquare,
   AiOutlineDownload,
   AiOutlineFilter,
 } from "react-icons/ai";
-import { FaImages } from "react-icons/fa";
-import Button from "@/components/shared/Button";
+import { BsFilterCircleFill } from "react-icons/bs";
+import { toast } from "react-toastify";
 type Props = {
   session: Session;
 };
@@ -97,7 +96,7 @@ const Filter = ({ session }: Props) => {
               type="button"
               onClick={handleRemoveBg}
               typeButton="action"
-              Icon={FaImages}
+              Icon={BsFilterCircleFill}
             >
               Aplicar filtro
             </Button>

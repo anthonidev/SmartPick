@@ -18,7 +18,7 @@ import {
   AiOutlineDownload,
   AiOutlineFilter,
 } from "react-icons/ai";
-import { FaImages } from "react-icons/fa";
+import { FaCompressArrowsAlt } from "react-icons/fa";
 import { toast } from "react-toastify";
 type Props = {
   session: Session;
@@ -96,7 +96,7 @@ const Optimization = ({ session }: Props) => {
               type="button"
               onClick={handleRemoveBg}
               typeButton="action"
-              Icon={FaImages}
+              Icon={FaCompressArrowsAlt}
             >
               Optimizar imagen
             </Button>
