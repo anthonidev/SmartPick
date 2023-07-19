@@ -10,12 +10,18 @@ import HttpImage from "@/lib/utils/HttpImage";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
+import { BiImageAlt } from "react-icons/bi";
+import { MdHeight } from "react-icons/md";
+import { AiOutlineColumnWidth, AiOutlineColumnHeight } from "react-icons/ai";
+import dayjs from "dayjs";
 
 type Props = {
   image: IImage;
 };
 
-const ImageItem = ({ image: { format, id, name, public_id, url } }: Props) => {
+const ImageItem = ({
+  image: { format, id, name, public_id, url, height, width, bytes, created_at },
+}: Props) => {
   const handleDownload = () => {
     saveAs(`${url}`, `${name}.png`);
   };
@@ -53,35 +59,65 @@ const ImageItem = ({ image: { format, id, name, public_id, url } }: Props) => {
 
   return (
     <>
-      <div className=" relative border-b border-r border-gray-200 p-4 sm:p-6 group">
-        <button
-          type="button"
-          onClick={handleDownload}
-          className="absolute top-5 z-30 right-5 text-gray-400 bg-indigo-400 hover:bg-indigo-500 rounded-full hidden group-hover:flex items-center justify-center"
-        >
-          <ArrowDownTrayIcon className=" h-8 w-8 text-white p-2 " />
-        </button>
-        <button
-          className="absolute top-5 z-30 left-5  bg-white  rounded-full hidden group-hover:flex items-center justify-center"
-          onClick={openModal}
-        >
-          <XCircleIcon className="h-8 w-8 text-red-500" />
-        </button>
-
-        <div className="aspect-h-1 aspect-w-1 overflow-hidden rounded-lg bg-gray-200">
+      <div className=" shadow-lg group border-2 hover:border-tertiary-50 rounded-xl overflow-hidden dark:border-gray-800 ">
+        <div className="relative overflow-hidden" style={{ height: "400px" }}>
           <Image
             src={`${process.env.NEXT_PUBLIC_MEDIA_URL}${public_id}`}
             alt={name}
-            className=" object-cover "
             width={500}
-            height={500}
+            height={300}
+            className="transition-all duration-500 ease-in-out transform group-hover:scale-110 object-cover rounded-t-md "
           />
-        </div>
-        <div className="pb-4 pt-10 text-center">
-          <div className="mt-3 flex flex-col items-center">
-            <span className="mt-1 text-sm text-gray-500">{name}</span>
+          {/* <div className="absolute top-5 left-5  flex flex-col space-y-2 justify-center items-center  tracking-wider">
+            <span className=" bg-secondary-50 rounded-full text-xs px-5  text-white w-full text-center uppercase">
+              Proyecto
+            </span>
+            <span className="  rounded-full text-xs px-5  text-white w-full text-center uppercase">
+              state
+            </span>
+          </div> */}
+
+          <div className="flex flex-col justify-center items-center absolute -bottom-16 rounded-t-sm group-hover:rounded-xl group-hover:-bottom-0 right-0 left-0 bg-gray-50 dark:bg-osc  rounded-b-md  group-hover:animate-fadeIn transition-all duration-500 ease-in-out">
+            <p className="  text-gray-800 dark:text-gray-100 text-sm">
+              {dayjs(created_at).format("DD/MM/YYYY")}
+            </p>
+            <p className="text-gray-800 dark:text-gray-100 text-xl font-extrabold  ">
+              {name.slice(0, 20)}
+            </p>
+            <p className="text-gray-700 font-light  text-sm w-full text-center py-1 uppercase dark:text-gray-400">
+              <BiImageAlt className="inline-block mr-2 text-primary-600 text-lg" />
+              {format}
+            </p>
+            <div className="flex justify-between space-x-3">
+              <p className="text-gray-700 font-light  text-sm w-full text-center py-1 dark:text-gray-400 ">
+                <AiOutlineColumnHeight className="inline-block mr-2 text-primary-600 text-lg" />
+                {height}px
+              </p>
+              <p className="text-gray-700 font-light  text-sm w-full text-center py-1 dark:text-gray-400">
+                <AiOutlineColumnWidth className="inline-block mr-2 text-primary-600 text-lg" />
+                {width}px
+              </p>
+            </div>
+
+            <div className="w-full  justify-center items-center flex group-hover:flex opacity-0 group-hover:opacity-100 transition-all duration-500 ease-in-out">
+              <div className=" w-full mx-4 my-2  rounded-md  text-white uppercase  text-center py-3 ">
+                <button
+                  type="button"
+                  onClick={handleDownload}
+                  className="absolute top-5 z-30 right-5 text-gray-400 bg-indigo-400 hover:bg-indigo-500 rounded-full hidden group-hover:flex items-center justify-center"
+                >
+                  <ArrowDownTrayIcon className=" h-8 w-8 text-white p-2 " />
+                </button>
+                <button
+                  onClick={openModal}
+                  type="button"
+                  className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded text-sm "
+                >
+                  Eliminar
+                </button>
+              </div>
+            </div>
           </div>
-          <p className="mt-4 text-base font-medium text-gray-900">{format}</p>
         </div>
       </div>
       <ModalPrimary

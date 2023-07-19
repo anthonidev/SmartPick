@@ -2,6 +2,7 @@ import { BytesToMegabytes } from "@/lib/utils/size";
 import Image from "next/image";
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+import { TbWeight } from "react-icons/tb";
 
 type ImageUploaderProps = {
   onUpload: (file: File) => void;
@@ -33,7 +34,7 @@ export default function InputImage({
   return (
     <div
       {...getRootProps()}
-      className="border-2 border-dashed border-gray-400 rounded-lg  flex flex-col justify-center items-center mt-10 py-10"
+      className="border-2 border-dashed border-gray-400 dark:border-blue-500 rounded-lg  flex flex-col justify-center items-center mt-10 py-10"
     >
       <input {...getInputProps()} />
       {uploadedFile ? (
@@ -45,14 +46,17 @@ export default function InputImage({
             height={300}
             className="object-cover"
           />
-          <span className="text-gray-600">
-            peso de la imagen: {BytesToMegabytes(uploadedFile.size)} MB
+          <span className="text-gray-600 dark:text-gray-200 text-sm my-4">
+            <TbWeight className="inline mr-1 text-lg " />
+            {BytesToMegabytes(uploadedFile.size)} MB
           </span>
         </>
       ) : isDragActive ? (
-        <p className="text-gray-400  ">Suelta la imagen aquí para subirla</p>
+        <p className="text-gray-400  dark:text-white">
+          Suelta la imagen aquí para subirla
+        </p>
       ) : (
-        <p className="text-gray-400  ">
+        <p className="text-gray-400  dark:text-white">
           Arrastra una imagen o haz click para seleccionar
         </p>
       )}

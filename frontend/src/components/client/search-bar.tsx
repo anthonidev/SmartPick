@@ -85,11 +85,11 @@ const SearchBar = (props: Props) => {
   return (
     <>
       <button
-        className=" z-40 w-full h-full flex items-center justify-center   px-4 py-2 text-sm font-medium text-gray-700 focus:outline-none space-x-2 "
+        className=" z-40  flex items-center justify-center    px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-100 focus:outline-none space-x-2 "
         onClick={openModal}
       >
         <MagnifyingGlassIcon className="h-5 w-5 z-40 " aria-hidden="true" />
-        <span className="text-gray-700 z-40">buscar</span>
+        <span className="text-gray-700 dark:text-gray-100 z-40">buscar</span>
       </button>
 
       <Transition.Root

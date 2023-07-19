@@ -1,12 +1,27 @@
-import { ArrowPathIcon } from "@heroicons/react/24/solid";
-import React from "react";
+import ReactLoading from "react-loading";
+type Props = {
+  type:
+    | "spin"
+    | "bars"
+    | "bubbles"
+    | "cubes"
+    | "cylon"
+    | "spin"
+    | "spinningBubbles"
+    | "spokes";
+  color: string;
+};
 
-type Props = {};
-
-const ArrowLoading = (props: Props) => {
+const ArrowLoading = ({ type, color }: Props) => {
   return (
-    <div className="flex justify-center items-center animate-spin">
-      <ArrowPathIcon className="h-20 w-20 text-gray-900" />
+    <div className="flex flex-col space-y-5 justify-center items-center">
+      <ReactLoading
+        type={type}
+        color={color}
+        height={"100px"}
+        width={"100px"}
+      />
+      <span className="text-blue-700 font-bold">Procesando...</span>
     </div>
   );
 };

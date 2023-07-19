@@ -27,7 +27,7 @@ const InputNumber = ({
     <div className="flex flex-col justify-start items-start my-5">
       <label
         htmlFor={label}
-        className=" text-sm font-medium text-gray-700 w-20 flex"
+        className=" text-sm font-medium text-gray-700 w-20 flex dark:text-gray-100"
       >
         {label}
       </label>
@@ -37,7 +37,7 @@ const InputNumber = ({
           name={label}
           pattern={pattern}
           id={label}
-          className="focus:ring-indigo-500  text-gray-800 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded py-1"
+          className="focus:ring-indigo-500 dark:text-gray-100 text-gray-800 focus:border-indigo-500 block w-full pl-7 pr-12 sm:text-sm border-gray-300 rounded py-1"
           placeholder={label}
           value={value}
           onChange={(e) => onChange(parseFloat(e.target.value))}
@@ -47,7 +47,9 @@ const InputNumber = ({
           disabled={disabled}
         />
         <div className="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
-          <span className="text-gray-500 sm:text-sm">{type}</span>
+          <span className="text-gray-500 sm:text-sm dark:text-gray-200">
+            {type}
+          </span>
         </div>
       </div>
     </div>

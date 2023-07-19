@@ -83,6 +83,7 @@ module.exports = {
           DEFAULT: "#001220",
           100: "#003d6c",
           200: "#002746",
+          300: "#2a2e32",
         }
       },
       animation: {

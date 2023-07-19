@@ -1,20 +1,25 @@
 "use client";
+import Button from "@/components/shared/Button";
 import CompareImage from "@/components/shared/compare-image";
 import InputImage from "@/components/shared/input-image";
 import ArrowLoading from "@/components/ui/arrow-loading";
-import ButtonDownload from "@/components/ui/button-download";
+import InfoImage from "@/components/ui/info-image";
 import RadioButtonNumber from "@/components/ui/radio-button-number";
 import { useAppDispatch, useAppSelector } from "@/context/hooks";
 import { setImage } from "@/context/slice/gallery/gallerySlice";
 import { qualityService } from "@/context/slice/gallery/service";
 import { quality } from "@/lib/data/filters";
 import useFile from "@/lib/hooks/use-file";
-import { BytesToMegabytes } from "@/lib/utils/size";
 import { saveAs } from "file-saver";
 import { Session } from "next-auth/core/types";
 import { useEffect, useState } from "react";
+import {
+  AiFillPlusSquare,
+  AiOutlineDownload,
+  AiOutlineFilter,
+} from "react-icons/ai";
+import { FaImages } from "react-icons/fa";
 import { toast } from "react-toastify";
-
 type Props = {
   session: Session;
 };
@@ -63,34 +68,63 @@ const Optimization = ({ session }: Props) => {
 
   return (
     <div>
+      {uploadedFile && selectedMailingLists && (
+        <div className="my-10 flex justify-start space-x-5">
+          {image && (
+            <Button
+              type="button"
+              onClick={() => resetFunction(true)}
+              typeButton="reset"
+              Icon={AiFillPlusSquare}
+            >
+              Nueva imagen
+            </Button>
+          )}
+          {image && (
+            <Button
+              type="button"
+              Icon={AiOutlineFilter}
+              onClick={() => resetFunction(false)}
+              typeButton="reset"
+            >
+              Aplicar otra calidad
+            </Button>
+          )}
+
+          {!image && (
+            <Button
+              type="button"
+              onClick={handleRemoveBg}
+              typeButton="action"
+              Icon={FaImages}
+            >
+              Optimizar imagen
+            </Button>
+          )}
+        </div>
+      )}
       {uploadedFile && image ? (
-        <div className="grid grid-cols-12 grid-rows-2 gap-5">
-          <div className="mt-1 col-span-8  row-span-2  ">
+        <div className="grid grid-cols-12  gap-5">
+          <div className="mt-1 col-span-8   ">
             <CompareImage
               image1={URL.createObjectURL(uploadedFile)}
               image2={`${process.env.NEXT_PUBLIC_MEDIA_URL}${image.public_id}`}
             />
           </div>
-          <div className="mt-1 overflow-hidden col-span-4  row-span-1 ">
-            <div className="text-gray-500">
-              <span className="text-gray-800">Calidad seleccionada: </span>
-              <span className="font-bold">{selectedMailingLists.value}</span>
-            </div>
-            <div className="text-gray-500">
-              <span className="text-gray-800">Peso antes: </span>
-              <span className="font-bold">
-                {BytesToMegabytes(uploadedFile.size, 4)} MB
-              </span>
-            </div>
-            <div className="text-gray-500">
-              <span className="text-gray-800">Peso despues: </span>
-              <span className="font-bold">
-                {BytesToMegabytes(image.bytes, 4)} MB
-              </span>
-            </div>
+          <div className="mt-1 overflow-hidden col-span-4   ">
+            <div className="flex justify-center items-center h-full flex-col space-y-5">
+              {uploadedFile && image && (
+                <InfoImage image={image} uploadedFile={uploadedFile} />
+              )}
 
-            <div className="flex justify-center items-center  flex-col space-y-5">
-              <ButtonDownload handleDownload={handleDownload} />
+              <Button
+                type="button"
+                typeButton="reset"
+                onClick={handleDownload}
+                Icon={AiOutlineDownload}
+              >
+                Descargar
+              </Button>
             </div>
           </div>
         </div>
@@ -98,7 +132,7 @@ const Optimization = ({ session }: Props) => {
         <div className="flex space-x-5">
           <div className="w-1/2 ">
             <InputImage onUpload={handleUpload} uploadedFile={uploadedFile} />
-            <div className="text-gray-800">
+            <div className="text-gray-800 dark:text-gray-100 mt-2">
               Calidad seleccionada:{" "}
               <span className="font-bold">{selectedMailingLists.value}</span>
             </div>
@@ -119,41 +153,8 @@ const Optimization = ({ session }: Props) => {
 
           {loading && (
             <div className="flex justify-center mt-10 w-1/2">
-              <ArrowLoading />
+              <ArrowLoading type="spokes" color="blue" />
             </div>
-          )}
-        </div>
-      )}
-
-      {uploadedFile && selectedMailingLists && (
-        <div className="mt-10 flex justify-end space-x-5">
-          {image && (
-            <button
-              type="button"
-              onClick={() => resetFunction(true)}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Restaurar
-            </button>
-          )}
-          {image && (
-            <button
-              type="button"
-              onClick={() => resetFunction(false)}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Aplicar otra calidad
-            </button>
-          )}
-
-          {!image && (
-            <button
-              type="button"
-              onClick={handleRemoveBg}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Optimizar imagen
-            </button>
           )}
         </div>
       )}

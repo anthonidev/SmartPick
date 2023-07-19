@@ -27,7 +27,9 @@ export default function RadioButtonNumber<T extends Option>({
   return (
     <div className="mt-8">
       <div className="flex items-center justify-between">
-        <h2 className="text-sm font-medium leading-6 text-gray-900">{title}</h2>
+        <h2 className="text-sm font-medium leading-6 text-gray-900  dark:text-gray-100">
+          {title}
+        </h2>
       </div>
 
       <RadioGroup value={select} onChange={setSelect}>
@@ -46,8 +48,8 @@ export default function RadioButtonNumber<T extends Option>({
                     : "cursor-not-allowed opacity-25",
                   active ? "ring-2 ring-indigo-600 ring-offset-2" : "",
                   checked
-                    ? "bg-indigo-600 text-white hover:bg-indigo-500"
-                    : "ring-1 ring-inset ring-gray-300 bg-white text-gray-900 hover:bg-gray-50",
+                    ? "bg-indigo-600 text-white hover:bg-indigo-500  "
+                    : "ring-1 ring-inset ring-gray-300  dark:ring-gray-800 bg-white text-gray-900 dark:text-gray-500 hover:bg-gray-50 dark:bg-osc-300",
                   "flex items-center justify-center rounded-md py-3 px-3 text-sm font-semibold uppercase sm:flex-1"
                 )
               }

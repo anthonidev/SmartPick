@@ -13,4 +13,5 @@ interface IImage {
   width: number;
   height: number;
   bytes: number;
+  created_at: string;
 }

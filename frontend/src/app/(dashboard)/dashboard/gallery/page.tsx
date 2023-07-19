@@ -23,8 +23,7 @@ export default async function Page() {
           Galeria
         </h1>
         <p className="mx-auto mt-4 max-w-xl text-base text-gray-500">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam
-          voluptate ex deserunt ullam, doloremque corrupti nostrum dignissimos
+          Podras ver todas las imagenes que has subido a Imagix
         </p>
       </div>
       <Suspense fallback={<SkeletonMainGrid />}>
@@ -43,7 +42,7 @@ async function GalleryList({ promise }: { promise: Promise<IImage[]> }) {
 
   return (
     <>
-      <div className="-mx-px grid grid-cols-2 border-l border-gray-200 sm:mx-0 md:grid-cols-3 lg:grid-cols-4">
+      <div className="-mx-px grid grid-cols-2 gap-8  sm:mx-0 md:grid-cols-3 lg:grid-cols-4">
         {gallery.map((item) => (
           <ImageItem image={item} key={item.id} />
         ))}
