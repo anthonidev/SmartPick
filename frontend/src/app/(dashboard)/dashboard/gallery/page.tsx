@@ -22,7 +22,7 @@ export default async function Page() {
         <h1 className="text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 mt-10">
           Galeria
         </h1>
-        <p className="mx-auto mt-4 max-w-xl text-base text-gray-500">
+        <p className="mx-auto mt-4 max-w-xl text-base text-gray-500 mb-10">
           Podras ver todas las imagenes que has subido a Imagix
         </p>
       </div>

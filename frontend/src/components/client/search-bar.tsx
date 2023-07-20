@@ -6,6 +6,9 @@ import {
   ClipboardDocumentCheckIcon,
   FunnelIcon,
   ArrowsPointingInIcon,
+  FaceSmileIcon,
+  SwatchIcon,
+  ScissorsIcon,
 } from "@heroicons/react/24/outline";
 import React, { useState, Fragment } from "react";
 import { Combobox, Dialog, Transition } from "@headlessui/react";
@@ -60,6 +63,30 @@ const items: {
     url: "/dashboard/optimization",
     color: "bg-violet-500",
     icon: ArrowsPointingInIcon,
+  },
+  {
+    id: 6,
+    name: "Detectar rostro",
+    description: "Detectar rostro en imagen",
+    url: "/dashboard/face-detection",
+    color: "bg-blue-500",
+    icon: FaceSmileIcon,
+  },
+  {
+    id: 7,
+    name: "tamaño y recorte",
+    description: "Cambiar tamaño y recortar imagen",
+    url: "/dashboard/size-crop",
+    color: "bg-orange-500",
+    icon: ScissorsIcon,
+  },
+  {
+    id: 8,
+    name: "Convertidor",
+    description: "Convertir imagen",
+    url: "/dashboard/convert",
+    color: "bg-gray-500",
+    icon: SwatchIcon,
   },
 ];
 function classNames(...classes: any) {
@@ -121,7 +148,7 @@ const SearchBar = (props: Props) => {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel className="mx-auto max-w-xl transform divide-y divide-gray-100 overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
+              <Dialog.Panel className="mx-auto max-w-xl transform divide-y divide-gray-100 dark:divide-gray-900 overflow-hidden rounded-xl bg-white dark:bg-osc-300 shadow-2xl ring-1 ring-black ring-opacity-5 transition-all">
                 <Combobox
                   onChange={(item: any) => (
                     router.push(item.url), setOpen(false)
@@ -133,8 +160,8 @@ const SearchBar = (props: Props) => {
                       aria-hidden="true"
                     />
                     <Combobox.Input
-                      className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
-                      placeholder="Search..."
+                      className="h-12 w-full border-0 bg-transparent pl-11 pr-4 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 focus:ring-0 sm:text-sm"
+                      placeholder="Buscar..."
                       onChange={(event) => setQuery(event.target.value)}
                     />
                   </div>
@@ -151,7 +178,7 @@ const SearchBar = (props: Props) => {
                           className={({ active }) =>
                             classNames(
                               "flex cursor-default select-none rounded-xl p-3",
-                              active && "bg-gray-100"
+                              active && "bg-gray-100 dark:bg-indigo-700"
                             )
                           }
                         >
@@ -172,7 +199,9 @@ const SearchBar = (props: Props) => {
                                 <p
                                   className={classNames(
                                     "text-sm font-medium",
-                                    active ? "text-gray-900" : "text-gray-700"
+                                    active
+                                      ? "text-gray-900 dark:text-gray-100"
+                                      : "text-gray-700 dark:text-gray-300"
                                   )}
                                 >
                                   {item.name}
@@ -180,7 +209,9 @@ const SearchBar = (props: Props) => {
                                 <p
                                   className={classNames(
                                     "text-sm",
-                                    active ? "text-gray-700" : "text-gray-500"
+                                    active
+                                      ? "text-gray-700  dark:text-gray-100"
+                                      : "text-gray-500 dark:text-gray-400"
                                   )}
                                 >
                                   {item.description}
@@ -198,12 +229,12 @@ const SearchBar = (props: Props) => {
                       <ExclamationCircleIcon
                         type="outline"
                         name="exclamation-circle"
-                        className="mx-auto h-6 w-6 text-gray-400"
+                        className="mx-auto h-6 w-6 text-gray-400 dark:text-yellow-500"
                       />
-                      <p className="mt-4 font-semibold text-gray-900">
+                      <p className="mt-4 font-semibold text-gray-900 dark:text-gray-100">
                         No hay resultados
                       </p>
-                      <p className="mt-2 text-gray-500">
+                      <p className="mt-2 text-gray-500 dark:text-gray-300">
                         Prueba con otra palabra
                       </p>
                     </div>
